@@ -17,7 +17,7 @@ function ReviewPage() {
       const formData = new FormData();
       formData.append('file', blob, 'image.png');
 
-      const response = await fetch('http://3.23.107.86/predict/', {
+      const response = await fetch('https://3.23.107.86/predict/', {
         method: 'POST',
         body: formData,
       });
