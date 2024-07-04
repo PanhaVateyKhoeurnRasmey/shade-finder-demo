@@ -17,7 +17,9 @@ function ReviewPage() {
       const formData = new FormData();
       formData.append('file', blob, 'image.png');
 
-      const response = await fetch('https://3.23.107.86/predict/', {
+      console.log("sending api request")
+
+      const response = await fetch('https://gehx3uvqt3.execute-api.us-east-2.amazonaws.com/shade-finder-api-gateway-test/predict', {
         method: 'POST',
         body: formData,
       });
