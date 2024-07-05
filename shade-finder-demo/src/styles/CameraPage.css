@@ -35,8 +35,8 @@ video {
     border-radius: 50% / 30%; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     background: rgba(255, 255, 255, 0.2); 
-    width: 27vw;  
-    height: 40vw; 
+    width: 33vw;  
+    height: 47vw; 
     max-width: 270px;  
     max-height: 400px; 
 }
@@ -44,16 +44,16 @@ video {
 /* Adjustments for smaller screens */
 @media (max-width: 800px) {
     .face-outline {
-        width: 27vw;
-        height: 40vw;
+        width: 33vw;
+        height: 47vw;
     }
 }
 
 /* Adjustments for very small screens */
 @media (max-width: 400px) {
     .face-outline {
-        width: 20 vw;
-        height: 30 vh;
+        width: 33 vw;
+        height: 47 vh;
     }
 }
 
