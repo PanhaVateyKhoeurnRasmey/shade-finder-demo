@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import "../styles/ReviewPage.css"
 
 function ReviewPage() {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function ReviewPage() {
 
   return (
     <div className="review-page">
-      {imageData ? <img src={imageData} alt="Captured" /> : <p>No image captured</p>}
+      {imageData ? <img src={imageData} id="review-image" alt="Captured" /> : <p>No image captured</p>}
       <button onClick={sendToAPI}>Confirm and Analyze</button>
     </div>
   );
