@@ -16,7 +16,9 @@ function HomePage() {
       </header>
       <div className="content">
         <h1>Welcome to Shade Finder</h1>
-        <button onClick={startShadeFinder}>Start</button>
+        <div className="button-container">
+          <button onClick={startShadeFinder}>Start</button>
+        </div>
       </div>
     </div>
   );
