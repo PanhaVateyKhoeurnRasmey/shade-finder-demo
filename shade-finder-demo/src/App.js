@@ -1,9 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './components/HomePage';
-import CameraPage from './components/CameraPage';
-import ReviewPage from './components/ReviewPage';
-import ResultsPage from './components/ResultsPage';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./components/HomePage";
+import CameraPage from "./components/CameraPage";
+import ReviewPage from "./components/ReviewPage";
+import ResultsPage from "./components/ResultsPage";
+import "./styles/App.css";
 
 function App() {
   return (
@@ -16,6 +17,6 @@ function App() {
       </Routes>
     </Router>
   );
-} 
+}
 
 export default App;

@@ -1,17 +1,23 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/HomePage.css";
 
 function HomePage() {
   const navigate = useNavigate();
 
   const startShadeFinder = () => {
-    navigate('/camera');
+    navigate("/camera");
   };
 
   return (
     <div className="home-page">
-      <h1>Welcome to Shade Finder</h1>
-      <button onClick={startShadeFinder}>Start</button>
+      <header>
+        <h1>ROSE INC</h1>
+      </header>
+      <div className="content">
+        <h1>Welcome to Shade Finder</h1>
+        <button onClick={startShadeFinder}>Start</button>
+      </div>
     </div>
   );
 }

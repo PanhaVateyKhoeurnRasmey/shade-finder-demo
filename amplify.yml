@@ -11,7 +11,7 @@ frontend:
   artifacts:
     baseDirectory: /shade-finder-demo/build
     files:
-      - '**/*'
+      - "**/*"
   cache:
     paths:
       - node_modules/**/*
