@@ -7,12 +7,13 @@ function ReviewPage() {
   const location = useLocation();
   const { imageData } = location.state || {};
   const [rotation, setRotation] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const sendToAPI = async () => {
     if (!imageData) return;
+    setLoading(true);
 
     try {
-      // Convert base64 image data to a Blob
       const responseBlob = await fetch(imageData);
       const blob = await responseBlob.blob();
 
@@ -39,6 +40,8 @@ function ReviewPage() {
     } catch (error) {
       console.error("Error fetching from API:", error);
       alert("Failed to fetch data from the API. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,6 +66,7 @@ function ReviewPage() {
       <div className="button-container">
         <button onClick={rotateImage}>Rotate</button>
         <button onClick={sendToAPI}>Confirm and Analyze</button>
+        {loading && <div className="loading">Loading...</div>}
       </div>
     </div>
   );
