@@ -4,6 +4,7 @@ import HomePage from "./components/HomePage";
 import CameraPage from "./components/CameraPage";
 import ReviewPage from "./components/ReviewPage";
 import ResultsPage from "./components/ResultsPage";
+import EmailPage from "./components/EmailPage";
 import "./styles/App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/camera" element={<CameraPage />} />
         <Route path="/review" element={<ReviewPage />} />
+        <Route path="/email" element={<EmailPage />} />
         <Route path="/results" element={<ResultsPage />} />
       </Routes>
     </Router>

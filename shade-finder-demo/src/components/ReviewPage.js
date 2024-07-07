@@ -36,7 +36,7 @@ function ReviewPage() {
 
       const data = await response.json();
       console.log(data);
-      navigate("/results", { state: { data: data } });
+      navigate("/email", { state: { data: data } });
     } catch (error) {
       console.error("Error fetching from API:", error);
       alert("Failed to fetch data from the API. Please try again later.");
