@@ -1,33 +1,66 @@
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import "../styles/results.css"; // Import the CSS file
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Papa from "papaparse";
+import "../styles/results.css";
 
 function ResultsPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data } = location.state || { data: [] };
-  const [selectedTone, setSelectedTone] = useState(data.tone.tone_label || "");
+  const { data: initialData } = location.state || { data: [] };
+  const [data, setData] = useState(initialData.recommendations);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedTone, setSelectedTone] = useState(
+    initialData.tone.tone_label || ""
+  );
   const [selectedUndertone, setSelectedUndertone] = useState(
-    data.undertone.undertone || ""
+    initialData.undertone.undertone || ""
   );
 
-  const tones = [
-    "deep",
-    "medium-deep",
-    "medium",
-    "light-medium",
-    "light",
-    "fair",
-  ];
-  const undertones = ["warm", "cool", "neutral"];
+  const map = { cool: "0", neutral: "1", warm: "2" };
 
-  if (!data || data.length === 0) {
-    return <div>No data available. Please go back and try again.</div>;
-  }
+  useEffect(() => {
+    fetch("/shade_finder.csv")
+      .then((response) => response.text())
+      .then((csvText) => {
+        Papa.parse(csvText, {
+          header: true,
+          complete: (results) => {
+            setData(results.data);
+          },
+        });
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedTone && selectedUndertone) {
+      const filtered = data.filter(
+        (item) =>
+          item.skin_darkness === selectedTone &&
+          item.warmth === map[selectedUndertone]
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data);
+    }
+  }, [selectedTone, selectedUndertone, data]);
+
+  const tones = [
+    "fair",
+    "light",
+    "light-medium",
+    "medium",
+    "medium-deep",
+    "deep",
+  ];
+  const undertones = ["cool", "neutral", "warm"];
 
   const startNewAnalysis = () => {
     navigate("/camera"); // Adjust the route to the appropriate start page
   };
+
+  if (!data || data.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="results-page">
@@ -87,7 +120,7 @@ function ResultsPage() {
           </tr>
         </thead>
         <tbody>
-          {data.recommendations.map((item, index) => (
+          {filteredData.map((item, index) => (
             <tr key={index}>
               <td>
                 <img src={item.url_model} alt="Model" />
