@@ -6,6 +6,20 @@ function ResultsPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { data } = location.state || { data: [] };
+  const [selectedTone, setSelectedTone] = useState(data.tone.tone_label || "");
+  const [selectedUndertone, setSelectedUndertone] = useState(
+    data.undertone.undertone || ""
+  );
+
+  const tones = [
+    "deep",
+    "medium-deep",
+    "medium",
+    "light-medium",
+    "light",
+    "fair",
+  ];
+  const undertones = ["warm", "cool", "neutral"];
 
   if (!data || data.length === 0) {
     return <div>No data available. Please go back and try again.</div>;
@@ -18,6 +32,33 @@ function ResultsPage() {
   return (
     <div className="results-page">
       <h2>Recommended Products</h2>
+      <div className="dropdown-container">
+        <div className="dropdown">
+          <button className="dropdown-button">
+            Predicted Tone: {selectedTone}
+          </button>
+          <div className="dropdown-content">
+            {tones.map((tone, index) => (
+              <div key={index} onClick={() => setSelectedTone(tone)}>
+                {tone}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="dropdown">
+          <button className="dropdown-button">
+            Predicted Undertone: {selectedUndertone}
+          </button>
+          <div className="dropdown-content">
+            {undertones.map((undertone, index) => (
+              <div key={index} onClick={() => setSelectedUndertone(undertone)}>
+                {undertone}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
       <table className="results-table">
         <thead>
           <tr>
