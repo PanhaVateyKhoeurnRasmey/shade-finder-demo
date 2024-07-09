@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/ReviewPage.css";
+import uploadToS3 from "../services/uploadToS3";
 
 function ReviewPage() {
   const navigate = useNavigate();
@@ -36,7 +37,12 @@ function ReviewPage() {
 
       const data = await response.json();
       console.log(data);
-      navigate("/email", { state: { data: data } });
+
+      const file = new File([blob], "image.png", { type: blob.type });
+      const s3Url = await uploadToS3(file);
+      // console.log("Image uploaded to S3:", s3Url);
+
+      navigate("/email", { state: { data: data, s3Url: s3Url } });
     } catch (error) {
       console.error("Error fetching from API:", error);
       alert("Failed to fetch data from the API. Please try again later.");

@@ -6,7 +6,7 @@ import "../styles/EmailPage.css";
 function EmailPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data } = location.state || {};
+  const { data, s3Url } = location.state || {};
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
@@ -23,11 +23,9 @@ function EmailPage() {
     setError("");
 
     try {
-      await saveEmail(email);
-      alert("Email saved successfully!");
+      await saveEmail(email, s3Url);
     } catch (error) {
-      console.error("Error saving email:", error);
-      alert("Error saving email");
+      alert("Error saving email and image Url");
     }
     navigate("/results", { state: { data: data } });
   };
