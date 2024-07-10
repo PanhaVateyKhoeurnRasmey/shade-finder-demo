@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/ReviewPage.css";
 import uploadToS3 from "../services/uploadToS3";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRedo, faCamera } from "@fortawesome/free-solid-svg-icons";
 
 function ReviewPage() {
   const navigate = useNavigate();
@@ -51,6 +53,10 @@ function ReviewPage() {
     }
   };
 
+  function retakePhoto() {
+    navigate("/camera");
+  }
+
   const rotateImage = () => {
     setRotation((prevRotation) => (prevRotation + 90) % 360);
   };
@@ -59,19 +65,28 @@ function ReviewPage() {
     <div className="review-page">
       <div className="image-wrapper">
         {imageData ? (
-          <img
-            src={imageData}
-            id="review-image"
-            alt="Captured"
-            style={{ transform: `rotate(${rotation}deg) scaleX(-1)` }}
-          />
+          <>
+            <img
+              src={imageData}
+              id="review-image"
+              alt="Captured"
+              style={{ transform: `rotate(${rotation}deg) scaleX(-1)` }}
+            />
+          </>
         ) : (
           <p>No image captured</p>
         )}
       </div>
       <div className="button-container">
-        <button onClick={rotateImage}>Rotate</button>
-        <button onClick={sendToAPI}>Confirm and Analyze</button>
+        <button onClick={retakePhoto} className="icon-button">
+          <FontAwesomeIcon icon={faCamera} /> Retake Photo
+        </button>
+        <button onClick={rotateImage} className="icon-button">
+          <FontAwesomeIcon icon={faRedo} /> Rotate
+        </button>
+        <button onClick={sendToAPI} className="icon-button">
+          Confirm and Analyze
+        </button>
         {loading && <div className="loading">Loading...</div>}
       </div>
     </div>
