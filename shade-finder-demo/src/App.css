@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 1em;
+  border: none;
+  border-radius: 25px;
+  background-color: #ccc;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background-color: #aaa;
+}
+
+button img {
+  width: 16px;
+  height: 16px;
+}

@@ -5,18 +5,22 @@ import CameraPage from "./components/CameraPage";
 import ReviewPage from "./components/ReviewPage";
 import ResultsPage from "./components/ResultsPage";
 import EmailPage from "./components/EmailPage";
-import "./styles/App.css";
+import StartNewAnalysisButton from "./components/StartNewAnalysisButton";
+import "./App.css";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/camera" element={<CameraPage />} />
-        <Route path="/review" element={<ReviewPage />} />
-        <Route path="/email" element={<EmailPage />} />
-        <Route path="/results" element={<ResultsPage />} />
-      </Routes>
+      <div className="App">
+        {<StartNewAnalysisButton />}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/camera" element={<CameraPage />} />
+          <Route path="/review" element={<ReviewPage />} />
+          <Route path="/email" element={<EmailPage />} />
+          <Route path="/results" element={<ResultsPage />} />
+        </Routes>
+      </div>
     </Router>
   );
 }

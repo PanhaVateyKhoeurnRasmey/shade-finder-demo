@@ -147,11 +147,6 @@ function ResultsPage() {
           ))}
         </tbody>
       </table>
-      <div className="button-container">
-        <button className="new-analysis-button" onClick={startNewAnalysis}>
-          ← Start New Analysis
-        </button>
-      </div>
     </div>
   );
 }
