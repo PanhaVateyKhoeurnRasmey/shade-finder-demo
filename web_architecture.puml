@@ -1,0 +1,22 @@
+@startuml
+actor User
+participant "AWS Amplify (Webapp)" as Amplify
+participant "API Gateway" as Gateway
+participant "EC2 (FastAPI Server)" as EC2
+participant "DynamoDB" as Dynamo
+participant "AWS S3 (file storage)" as S3
+
+User -> Amplify : Take a picture and analyze
+
+' Define analysis pipeline
+Amplify -> Gateway: Send image for analysis
+Gateway -> EC2: Forward to FastAPI server
+Gateway <- EC2: Send recommendations
+Amplify <- Gateway: Display recommendations
+
+' Define email input flow
+User -> Amplify: Input email
+Amplify -> S3: Save Image
+S3 -> Amplify: Retreive image URL
+Amplify-> Dynamo : Save email and image URL
+@enduml
