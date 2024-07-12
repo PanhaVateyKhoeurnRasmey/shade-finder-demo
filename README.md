@@ -1,5 +1,9 @@
 # Shade Finder Demo App
 
+## User Workflow
+
+![Diagram](userworkflow.png)
+
 ## Architecture
 
 ![Diagram](architecture.png)
