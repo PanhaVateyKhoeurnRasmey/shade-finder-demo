@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/ReviewPage.css";
-import uploadToS3 from "../services/uploadToS3";
+// import uploadToS3 from "../services/uploadToS3";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo, faCamera } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,37 +17,39 @@ function ReviewPage() {
     setLoading(true);
 
     try {
+      // Ensure imageData is valid
+      if (!imageData.startsWith("data:image")) {
+        throw new Error("Invalid image data format.");
+      }
+
       const responseBlob = await fetch(imageData);
       const blob = await responseBlob.blob();
 
       const formData = new FormData();
       formData.append("file", blob, "image.png");
 
-      console.log("sending api request");
+      console.log("Sending API request");
 
-      const response = await fetch(
-        "https://gehx3uvqt3.execute-api.us-east-2.amazonaws.com/shade-finder-api-gateway-test/predict",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:8000/v2/predict", {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
       }
 
       const data = await response.json();
-      console.log(data);
+      console.log("API response:", data);
 
-      const file = new File([blob], "image.png", { type: blob.type });
-      const s3Url = await uploadToS3(file);
-      // console.log("Image uploaded to S3:", s3Url);
+      // const file = new File([blob], "image.png", { type: blob.type });
+      // const s3Url = await uploadToS3(file);
 
-      navigate("/email", { state: { data: data, s3Url: s3Url } });
+      navigate("/email", { state: { data: data } });
     } catch (error) {
       console.error("Error fetching from API:", error);
-      alert("Failed to fetch data from the API. Please try again later.");
+      alert(`Failed to fetch data from the API: ${error}`);
     } finally {
       setLoading(false);
     }
@@ -65,14 +67,12 @@ function ReviewPage() {
     <div className="review-page">
       <div className="image-wrapper">
         {imageData ? (
-          <>
-            <img
-              src={imageData}
-              id="review-image"
-              alt="Captured"
-              style={{ transform: `rotate(${rotation}deg) scaleX(-1)` }}
-            />
-          </>
+          <img
+            src={imageData}
+            id="review-image"
+            alt="Captured"
+            style={{ transform: `rotate(${rotation}deg) scaleX(-1)` }}
+          />
         ) : (
           <p>No image captured</p>
         )}
